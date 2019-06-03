@@ -1,0 +1,15 @@
+{
+  "name": "web-push-server-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "generate-keys": "web-push generate-vapid-keys --json > vapid-keys.json "
+  },
+  "author": "Y.Takeuchi",
+  "license": "ISC",
+  "dependencies": {
+    "web-push": "^3.3.5"
+  }
+}
