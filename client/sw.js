@@ -1,4 +1,14 @@
 importScripts('dexie.js', 'databases.js');
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
+
+workbox.routing.registerRoute(
+  new RegExp('.*\.js'),
+  new workbox.strategies.NetworkFirst()
+);
+
+workbox.precaching.precacheAndRoute([
+  '/index.html'
+]);
 
 self.addEventListener('push', event => {
   event.waitUntil((async () => {
@@ -14,7 +24,7 @@ self.addEventListener('push', event => {
         body: 'Yay it works.',
       };
       await self.registration.showNotification(title, options)
-    } catch(e) {
+    } catch (e) {
       console.error(e);
     }
   })());
