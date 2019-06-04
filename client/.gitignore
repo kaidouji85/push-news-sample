@@ -1,2 +1,6 @@
 node_module
 public-key.js
+public/main.js
+public/main.js.map
+public/sw.js
+public/sw.js.map

@@ -1,4 +1,5 @@
-importScripts('dexie.js', 'databases.js');
+import {putLatestNews} from "./database/databases";
+
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
 workbox.routing.registerRoute(

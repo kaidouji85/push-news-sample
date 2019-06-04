@@ -1,3 +1,5 @@
+import Dexie from 'dexie';
+
 /**
  * News
  * @typedef {Object} News
@@ -35,14 +37,14 @@ PushNewsDB.version(1).stores({
  * 本アプリでは、「最新ニュース」には常に1レコードしかデータが存在しないように設計されている
  * そのため、ID値をこのようにハードコーディングしている
  * */
-const LatestNewsID = 'latestNewsId';
+export const LatestNewsID = 'latestNewsId';
 
 /**
  * 最新ニュースを取得する
  *
  * @returns {Promise<null|News[]>}
  */
-async function getLatestNews() {
+export async function getLatestNews() {
   try {
     const result = await PushNewsDB.latest
       .where('id')
@@ -65,7 +67,7 @@ async function getLatestNews() {
  * @param {News[]} news 最新ニュース
  * @returns {Promise<void>}
  */
-async function putLatestNews(news) {
+export async function putLatestNews(news) {
   try {
     // TODO latestのデータ型チェックを追加する
     const putItem = {

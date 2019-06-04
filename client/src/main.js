@@ -1,6 +1,7 @@
-import {subscribe} from "./subscription.js";
-import {PUBLIC_KEY} from "./public-key.js";
-import {updateLatestNews, updateSubscription} from "./dom.js";
+import {subscribe} from "./subscription/subscription";
+import {PUBLIC_KEY} from "../public-key";
+import {updateLatestNews, updateSubscription} from "./dom/dom";
+import {getLatestNews} from "./database/databases";
 
 /** メイン関数 */
 window.onload = async () => {
