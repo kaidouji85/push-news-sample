@@ -1,3 +1,4 @@
+const {generateNews} = require("./news");
 const VAPID_KEYS = require('./vapid-keys.json');
 const webpush = require('web-push');
 const {Subscription} = require('./subscription');
@@ -10,18 +11,10 @@ const {Subscription} = require('./subscription');
  */
 async function pushMessage(pushSubscription) {
   try {
-    const payload = [
-      {
-        date: new Date(),
-        title: `ニュース1 ${new Date().toString()}`,
-        summary: 'サマリー1',
-      },
-      {
-        date: new Date(),
-        title: `ニュース2 ${new Date().toString()}`,
-        summary: 'サマリー2',
-      },
-    ];
+    const payload = {
+      date: new Date(),
+      news: generateNews()
+    };
     const options = {
       vapidDetails: {
         subject: 'mailto:kaidouji85@gmail.com',

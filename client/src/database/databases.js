@@ -1,3 +1,5 @@
+import Dexie from 'dexie';
+
 /**
  * News
  * @typedef {Object} News
@@ -5,10 +7,8 @@
  * @property {string} title タイトル
  * @property {string} summary サマリー
  *
- * 例)
- *
+ * (例)
  * {
- *   date: '2019-05-01T00:00:00'
  *   title: 'ニュースタイトル',
  *   summary: 'ニュースのサマリがセットされます'
  * }
@@ -17,8 +17,21 @@
 /**
  * オブジェクトストア「最新ニュース」
  * @typeof {Object} LatestNews
+ * @property {Date} date 配信日
  * @property {string} id ユニークID
  * @property {News[]} news 最新ニュースのリスト
+ *
+ * (例)
+ * {
+ *   id: 'latestNewsId',
+ *   news: [
+ *     {
+ *       date: '2019-05-01T00:00:00',
+ *       title: 'ニュースタイトル',
+ *       summary: 'ニュースのサマリがセットされます'
+ *     }
+ *   ]
+ * }
  */
 
 /** Push Newsのデータベース */
@@ -35,14 +48,14 @@ PushNewsDB.version(1).stores({
  * 本アプリでは、「最新ニュース」には常に1レコードしかデータが存在しないように設計されている
  * そのため、ID値をこのようにハードコーディングしている
  * */
-const LatestNewsID = 'latestNewsId';
+export const LatestNewsID = 'latestNewsId';
 
 /**
  * 最新ニュースを取得する
  *
  * @returns {Promise<null|News[]>}
  */
-async function getLatestNews() {
+export async function getLatestNews() {
   try {
     const result = await PushNewsDB.latest
       .where('id')
@@ -62,15 +75,14 @@ async function getLatestNews() {
 /**
  * 最新ニュースを更新する
  *
- * @param {News[]} news 最新ニュース
+ * @param {LatestNews} news 最新ニュース
  * @returns {Promise<void>}
  */
-async function putLatestNews(news) {
+export async function putLatestNews(news) {
   try {
-    // TODO latestのデータ型チェックを追加する
     const putItem = {
+      ...news,
       id: LatestNewsID,
-      news: news
     };
     await PushNewsDB.latest.put(putItem);
   } catch (e) {

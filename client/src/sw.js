@@ -1,4 +1,5 @@
-importScripts('dexie.js', 'databases.js');
+import {putLatestNews} from "./database/databases";
+
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js');
 
 workbox.routing.registerRoute(
@@ -13,13 +14,11 @@ workbox.precaching.precacheAndRoute([
 self.addEventListener('push', event => {
   event.waitUntil((async () => {
     try {
-      console.log('[Service Worker] Push Received.');
-      console.log(`[Service Worker] Push had this data: "${event.data.text()}"`);
       const data = event.data.json();
-      const newsList = parseNewsList(data);
+      const newsList = parseLatestNews(data);
       await putLatestNews(newsList);
 
-      const title = 'Push Codelab';
+      const title = '新しいニュースを受信しました';
       const options = {
         body: 'Yay it works.',
       };
@@ -29,6 +28,25 @@ self.addEventListener('push', event => {
     }
   })());
 });
+
+/**
+ * 最新ニュース情報にパースする
+ *
+ * @param {any} data
+ * @returns {null|LatestNews}
+ */
+function parseLatestNews(data) {
+  if (data === null || data === undefined) {
+    return null;
+  }
+
+  const newsList = parseNewsList(data.news);
+  return {
+    id: 'LatestNewsId',
+    date: new Date(data.date),
+    news: newsList ? newsList : [],
+  };
+}
 
 /**
  * PUSH通知から取得したデータを最新ニュースにパースする
