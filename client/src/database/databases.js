@@ -9,7 +9,6 @@ import Dexie from 'dexie';
  *
  * (例)
  * {
- *   date: '2019-05-01T00:00:00'
  *   title: 'ニュースタイトル',
  *   summary: 'ニュースのサマリがセットされます'
  * }
@@ -18,6 +17,7 @@ import Dexie from 'dexie';
 /**
  * オブジェクトストア「最新ニュース」
  * @typeof {Object} LatestNews
+ * @property {Date} date 配信日
  * @property {string} id ユニークID
  * @property {News[]} news 最新ニュースのリスト
  *
@@ -26,7 +26,7 @@ import Dexie from 'dexie';
  *   id: 'latestNewsId',
  *   news: [
  *     {
- *       date: '2019-05-01T00:00:00'
+ *       date: '2019-05-01T00:00:00',
  *       title: 'ニュースタイトル',
  *       summary: 'ニュースのサマリがセットされます'
  *     }
@@ -75,15 +75,14 @@ export async function getLatestNews() {
 /**
  * 最新ニュースを更新する
  *
- * @param {News[]} news 最新ニュース
+ * @param {LatestNews} news 最新ニュース
  * @returns {Promise<void>}
  */
 export async function putLatestNews(news) {
   try {
-    // TODO latestのデータ型チェックを追加する
     const putItem = {
+      ...news,
       id: LatestNewsID,
-      news: news
     };
     await PushNewsDB.latest.put(putItem);
   } catch (e) {
