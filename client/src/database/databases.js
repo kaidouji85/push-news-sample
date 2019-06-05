@@ -7,8 +7,7 @@ import Dexie from 'dexie';
  * @property {string} title タイトル
  * @property {string} summary サマリー
  *
- * 例)
- *
+ * (例)
  * {
  *   date: '2019-05-01T00:00:00'
  *   title: 'ニュースタイトル',
@@ -21,6 +20,18 @@ import Dexie from 'dexie';
  * @typeof {Object} LatestNews
  * @property {string} id ユニークID
  * @property {News[]} news 最新ニュースのリスト
+ *
+ * (例)
+ * {
+ *   id: 'latestNewsId',
+ *   news: [
+ *     {
+ *       date: '2019-05-01T00:00:00'
+ *       title: 'ニュースタイトル',
+ *       summary: 'ニュースのサマリがセットされます'
+ *     }
+ *   ]
+ * }
  */
 
 /** Push Newsのデータベース */
